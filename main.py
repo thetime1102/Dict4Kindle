@@ -15,7 +15,7 @@ def show_help():
     print("**  Version: %s" % VERSION)
     print("**  Copyright (C) 2018 - Tran Quang Vinh")
     print("***********************************************************************************************************")
-    print("Usage tool: python  [option]  [use_for_option]")
+    print("Usage tool: dict4kindle.exe  [option]  [use_for_option]")
     print("    option:")
     print("         mazii    |==> from mazii db (JP-VN dict) (*.db) file generate to dictionary resource (*.txt)     |")
     print("         to_opf   |==> from dictionary resource (*.txt) convert tab delimited dictionary into *.opf file  |")
@@ -247,7 +247,7 @@ if __name__ == '__main__':
                     if os.path.isfile(db_file):
                         generate_mazzi_dict(db_file)
                     else:
-                        show_help()
+                        print("Usage tool: dict4kindle.exe  mazii  mazii_file_path.db")
 
             if opt.__eq__(app.build_opf):
                 if len(sys.argv) >= 2:
@@ -259,7 +259,7 @@ if __name__ == '__main__':
                         resource_file_path = sys.argv[2]
 
                     if not os.path.isfile(resource_file_path) or os.path.splitext(resource_file_path)[1].__ne__(".txt"):
-                        print("Usage tool: python  to_opf  resource_file_path.txt")
+                        print("Usage tool: dict4kindle.exe  to_opf  resource_file_path.txt")
                     else:
                         tab2opf(resource_file_path, utf_index)
 
@@ -268,7 +268,7 @@ if __name__ == '__main__':
                     mobigen_path = os.path.join(os.getcwd(), "tool", "mobigen.exe")
                     opf_file_path = sys.argv[2]
                     if not os.path.isfile(opf_file_path) or os.path.splitext(opf_file_path)[1].__ne__(".opf"):
-                        print("Usage tool: python  to_mobi  opf_file_path.opf")
+                        print("Usage tool: dict4kindle.exe  to_mobi  opf_file_path.opf")
                     else:
                         if not os.path.exists(mobigen_path):
                             print("Not found: {0}".format(mobigen_path))
