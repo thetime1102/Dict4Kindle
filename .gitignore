@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# prj folder
+db2txt/
+tab2opf_converted/
