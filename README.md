@@ -22,5 +22,5 @@ This tool use for build dictionary by your self.
     dict4kindle.exe  [option]  [use_for_option]
     
 ## Release
-    - 2018/10/20 (ver1.0): https://mega.nz/#!Jhg3UYLY!0SZ-CwST0u-PQxxFGWnYWMjwECVye2At8gPNWJTb_u8
+    - 2018/10/20 (ver1.0): https://mega.nz/#!RlhhUQjJ!WfQtBC-Hja4NL0yWYu8lQgbnTfsvCCSdZ8Sb8mQ-7P0
     

@@ -241,6 +241,9 @@ def tab2opf(file_path, utf_index):
         opf_to.write(tab2opf_set.opf_temp_end())
 
         opf_to.close()
+    print("-----------------------------------------------------------------------")
+    print("opf converted: {0}".format(opf_file_path))
+    print("-----------------------------------------------------------------------")
 
 
 if __name__ == "__main__":
