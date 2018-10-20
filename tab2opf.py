@@ -54,7 +54,7 @@ from unicodedata import normalize, decomposition, combining
 import string
 import tab2opf_setting as tab2opf_set
 
-VERSION = "2.0"
+VERSION = "1.0"
 
 # Hand-made table from PloneTool.py
 mapping_custom_1 = {
@@ -167,7 +167,7 @@ def tab2opf(file_path, utf_index):
     # len_line = len(fr.readlines())
     for r in fr.readlines():
 
-        print("i % 10000 = {0}".format(i % 10000))
+        # print("i % 10000 = {0}".format(i % 10000))
         if i % 10000 == 0:
             if to:
                 to.write("""

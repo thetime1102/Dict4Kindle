@@ -2,6 +2,12 @@ import os
 import ast
 import sqlite3_common as sql
 
+general_cmd = ["mazii", "to_opf", "to_mobi"]
+
+build_mazzi_dict = "mazii"
+build_opf = "to_opf"
+build_mobi = "to_mobi"
+
 
 def get_current_path():
     """
@@ -24,13 +30,13 @@ def to_string(text):
     return txt
 
 
-def get_db_file():
+def get_db_file(db_file):
     """
     get directory of database file
     :return: database file path
     """
     cur_path = get_current_path()
-    file_path = cur_path + "/db/javn3.db"
+    file_path = cur_path + "/db_mazii/{0}".format(db_file)
     return file_path
 
 
@@ -40,7 +46,7 @@ def get_type_mapping_file():
     :return: type mapping file path
     """
     cur_path = get_current_path()
-    file_path = cur_path + "/db/type_mapping.txt"
+    file_path = cur_path + "/db_mazii/type_mapping.txt"
     return file_path
 
 

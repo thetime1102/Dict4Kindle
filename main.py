@@ -2,10 +2,29 @@ import os
 import sqlite3_common as sql
 import app_common as app
 import ast
+import sys
 from datetime import datetime
+from tab2opf import tab2opf
+
+VERSION = "1.0"
 
 
-def main():
+def show_help():
+    print("***********************************************************************************************************")
+    print("**  Create Dictionary Search Tool")
+    print("**  Version: %s" % VERSION)
+    print("**  Copyright (C) 2018 - Tran Quang Vinh")
+    print("***********************************************************************************************************")
+    print("Usage tool: python  [option]  [use_for_option]")
+    print("    option:")
+    print("         mazii    |==> from mazii db (JP-VN dict) (*.db) file generate to dictionary resource (*.txt)     |")
+    print("         to_opf   |==> from dictionary resource (*.txt) convert tab delimited dictionary into *.opf file  |")
+    print("         to_mobi  |==> from *.opf file convert to dictionary (*.mobi) use for Kindle                      |")
+    print("***********************************************************************************************************")
+    sys.exit(1)
+
+
+def generate_mazzi_dict(db_file):
     type_mapping_file = app.get_type_mapping_file()
     if not os.path.exists(type_mapping_file):
         print("type_mapping.txt not found !")
@@ -19,7 +38,7 @@ def main():
             print("error: " + ex)
             return
 
-    database_file = app.get_db_file()
+    database_file = app.get_db_file(db_file)
     if not os.path.exists(database_file):
         print("database file not found !")
         return
@@ -214,5 +233,64 @@ def main():
     print("-----------------------------done----------------------------------")
 
 
+def main():
+    print("main")
+
+
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1:
+        opt = sys.argv[1]
+        if opt in app.general_cmd:
+            if opt.__eq__(app.build_mazzi_dict):
+                if len(sys.argv) >= 2:
+                    db_file = sys.argv[2]
+                    if os.path.isfile(db_file):
+                        generate_mazzi_dict(db_file)
+                    else:
+                        show_help()
+
+            if opt.__eq__(app.build_opf):
+                if len(sys.argv) >= 2:
+                    utf_index = False
+                    if sys.argv[2] == '-utf':
+                        utf_index = True
+                        resource_file_path = sys.argv[3]
+                    else:
+                        resource_file_path = sys.argv[2]
+
+                    if not os.path.isfile(resource_file_path) or os.path.splitext(resource_file_path)[1].__ne__(".txt"):
+                        print("Usage tool: python  to_opf  resource_file_path.txt")
+                    else:
+                        tab2opf(resource_file_path, utf_index)
+
+            if opt.__eq__(app.build_mobi):
+                if len(sys.argv) >= 2:
+                    mobigen_path = os.path.join(os.getcwd(), "tool", "mobigen.exe")
+                    opf_file_path = sys.argv[2]
+                    if not os.path.isfile(opf_file_path) or os.path.splitext(opf_file_path)[1].__ne__(".opf"):
+                        print("Usage tool: python  to_mobi  opf_file_path.opf")
+                    else:
+                        if not os.path.exists(mobigen_path):
+                            print("Not found: {0}".format(mobigen_path))
+                        else:
+                            try:
+                                build_mobi_cmd = "{0} {1}".format(mobigen_path, opf_file_path)
+                                build_mobi_status = os.system(build_mobi_cmd)
+                                if build_mobi_status == 0:
+                                    mobi_out_dir = os.path.split(os.path.abspath(opf_file_path))[0]
+                                    mobi_name = "{0}.mobi".format(os.path.splitext(os.path.basename(opf_file_path))[0])
+                                    mobi_file_path = os.path.join(mobi_out_dir, mobi_name)
+                                    if os.path.isfile(mobi_file_path):
+                                        print("-----------------------------------------------------------------------")
+                                        print("Created file: {0}".format(mobi_file_path))
+                                        print("-----------------------------------------------------------------------")
+                                    else:
+                                        print("Can not build {0} file to".format(opf_file_path))
+                                else:
+                                    print("Can not build {0} file to".format(opf_file_path))
+                            except Exception as ex:
+                                print(ex)
+        else:
+            show_help()
+    else:
+        show_help()
