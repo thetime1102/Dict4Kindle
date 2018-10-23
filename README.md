@@ -8,11 +8,19 @@ This tool use for build dictionary by your self.
 - Clime
 - Numpy
 - Pyinstaller
+- PyQt5
 
 ## Install libraries
+
     pip install -r requirements.txt
 
 ## Build
+Build UI
+    
+    pyuic5.exe -x ui_design\Dict4Kindle.ui -o ui_dict_4_kindle.py
+
+Build project
+
     pyinstaller build_dict4kinlde.spec
     
 ## Usage (for developer)
